@@ -1,8 +1,26 @@
+
+@font-face {
+  font-family: 'Replica Pro';
+  src: url('../fonts/fonnts.com-ReplicaPro.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Replica Pro';
+  src: url('../fonts/fonnts.com-Replica-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Replica Pro', sans-serif;
+  background: linear-gradient(90deg,#eddfff,#fff1f6);
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
