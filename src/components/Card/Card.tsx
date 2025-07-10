@@ -10,8 +10,6 @@ import { styled } from '@mui/material/styles';
 const StyledCard = styled(MuiCard)<MuiCardProps>(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  width: '100vw',
-  height: '100vh',
   margin: 0,
 }));
 
