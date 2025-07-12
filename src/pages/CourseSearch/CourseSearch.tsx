@@ -3,11 +3,11 @@ import FormControl from '@mui/material/FormControl';
 import { Box, Paper, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
-import { fetchCourses } from '../utilities';
-import { StyledPage } from './StyledPage';
-import { DefaultPage } from './DefaultPage';
-import Card from '../components/Card/Card';
-import Button from '../components/Button/Button';
+import { fetchCourses } from '../../utilities';
+import { StyledPage } from '../StyledPage';
+import { DefaultPage } from '../DefaultPage';
+import Card from '../../components/Card/Card';
+import Button from '../../components/Button/Button';
 
 interface CourseSearchProps { mode: 'default' | 'styled' }
 
@@ -45,7 +45,7 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
 
     return (
         <>
-            <header>
+            <header style={{ paddingTop: 20, paddingBottom: 20, paddingLeft: 30, alignItems: 'center', display: 'flex' }}>
                 <a href="https://tophat.com/">
                     <Box
                         component="img"
