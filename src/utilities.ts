@@ -1,5 +1,10 @@
 import { CourseItem } from "./models/CourseItem";
 
+async function fetchCourses (searchTerm: string): Promise<CourseItem[]> {
+    const res = await fetch(`https://coursetreesearch-service-sandbox.dev.tophat.com/?query=${searchTerm}`);
+    return res.json();
+};
+
 function buildTree(apiList: CourseItem[]) {
     const map = new Map<number, CourseItem>();
     const modules: CourseItem[] = [];
@@ -46,4 +51,4 @@ function mark(modules: CourseItem[], depth = 0) {
     });
 }
 
-export { buildTree, buildTreeArrayReduce };
+export { fetchCourses, buildTree, buildTreeArrayReduce };

@@ -1,22 +1,18 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import FormControl from '@mui/material/FormControl';
 import { Box, Paper, TextField } from '@mui/material';
-import CourseListItem from './components/Course/CourseListItem';
 import { useQuery } from '@tanstack/react-query';
 import Card from './components/Card/Card';
 import Button from './components/Button/Button';
-import { CourseItem } from './models/CourseItem';
 import { enqueueSnackbar } from 'notistack';
-import { buildTree, buildTreeArrayReduce } from './utilities';
+import { fetchCourses } from './utilities';
+import { StyledPage } from './pages/PlainPage';
+import { DefaultPage } from './pages/StyledPage';
 
-const fetchCourses = async (searchTerm: string): Promise<CourseItem[]> => {
-    const res = await fetch(`https://coursetreesearch-service-sandbox.dev.tophat.com/?query=${searchTerm}`);
-    return res.json();
-};
+interface CourseSearchProps { mode: 'default' | 'styled' }
 
-export const CourseSearch: React.FC = () => {
+export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
     const [error, setError] = useState<string | null>(null);
-    const [items, setItems] = useState<CourseItem[]>([]);
     const searchTermRef = useRef<HTMLInputElement>(null);
 
     const { data, status, refetch } = useQuery({
@@ -37,56 +33,57 @@ export const CourseSearch: React.FC = () => {
         }
     }, [data, status]);
 
-    //const tree = useMemo(() => buildTreeArrayReduce(data), [data]);
-    const styledTree = useMemo(() => data ? buildTree(data) : [], [data]);
-
-
-    // const renderTree = (nodes: any[], level = 0) =>
-    //     nodes.map(n => (
-    //         <div key={n.id} style={{ marginLeft: level * 12 }}>
-    //             {n.name}
-    //             {renderTree(n.children, level + 1)}
-    //         </div>
-    //     ));
-
-
     return (
-        <Card sx={{ background: 'transparent', flex: 8 }}>
-            <Card sx={{ width: 500, height: 700, minHeight: 700 }}>
-                <form noValidate autoComplete="off">
-                    <FormControl sx={{ width: '25ch' }}>
-                        <TextField
-                            required
-                            id="outlined-required"
-                            label="Search"
-                            inputRef={searchTermRef}
-                        />
-                    </FormControl>
-                    <Button onClick={() => {
-                        setError(null);
-                        searchTermRef.current?.value?.trim()
-                            ? refetch()
-                            : setError('Please enter the search term.')
-                    }}>
-                        Search
-                    </Button>
-                    {error && (
-                        <Box component="div" sx={{ color: 'error.main', mt: 2 }}>
-                            {error}
-                        </Box>
-                    )}
-                </form>
+        <>
+            <header>
+                <a href="https://tophat.com/">
+                    <Box
+                        component="img"
+                        src="https://tophat.com/wp-content/themes/TOPHAT01/build/images/logo.svg"
+                        width={125}
+                        height={21.5}
+                        alt="Top Hat Logo" />
+                </a>
+            </header>
+            <Card sx={{ background: 'transparent', flex: 8 }}>
+                <Card sx={{ width: 500, height: 700, minHeight: 700 }}>
+                    <form noValidate autoComplete="off">
+                        <FormControl sx={{ width: '25ch' }}>
+                            <TextField
+                                required
+                                id="outlined-required"
+                                label="Search"
+                                inputRef={searchTermRef}
+                            />
+                        </FormControl>
+                        <Button onClick={() => {
+                            setError(null);
+                            searchTermRef.current?.value?.trim()
+                                ? refetch()
+                                : setError('Please enter the search term.')
+                        }}>
+                            Search
+                        </Button>
+                        {error && (
+                            <Box component="div" sx={{ color: 'error.main', mt: 2 }}>
+                                {error}
+                            </Box>
+                        )}
+                    </form>
 
-                <Paper sx={{ maxHeight: 500, overflow: 'auto', p: 2, width: 320 }}>
-                    <Paper sx={{ width: 300, boxShadow: 0 }}>
-                        {/* <div>
-                            {renderTree(tree)}
-                        </div> */}
-                        <CourseListItem items={styledTree} />
+                    <Paper sx={{ maxHeight: 500, overflow: 'auto', p: 2, width: 320 }}>
+                        <Paper sx={{ width: 300, boxShadow: 0 }}>
+                            {data ? mode === 'default' ?
+                                (<DefaultPage data={data} />) :
+                                (<StyledPage data={data} />) :
+                                null
+                            }
+                        </Paper>
                     </Paper>
-                </Paper>
+                </Card>
             </Card>
-        </Card>
+        </>
+
     );
 }
 
