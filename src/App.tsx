@@ -1,27 +1,13 @@
 import './css/App.css';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import CourseSearch from './CourseSearch';
-const Header = styled('header')(({ theme }) => ({
-  padding: theme.spacing(3, 5),
-}));
+import { Routes, Route } from 'react-router-dom';
+import CourseSearch from './pages/CourseSearch';
 
 function App() {
   return (
-    <>
-      <Header>
-        <a href="https://tophat.com/">
-          <Box
-            component="img"
-            src="https://tophat.com/wp-content/themes/TOPHAT01/build/images/logo.svg"
-            width={125}
-            height={21.5}
-            alt="Top Hat Logo" />
-        </a>
-      </Header>
-        <CourseSearch />
-    </>
-
+    <Routes>
+      <Route path="/" element={<CourseSearch mode="default" />} />
+      <Route path="/styled" element={<CourseSearch mode="styled" />} />
+    </Routes>
   );
 }
 

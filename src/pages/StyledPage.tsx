@@ -1,17 +1,11 @@
 import { useMemo } from 'react';
-import { buildTreeArrayReduce } from '../utilities';
+import CourseListItem from '../components/Course/CourseListItem';
 import { CourseItem } from '../models/CourseItem';
+import { buildTree } from '../utilities';
 
-interface DefaultPageProps { data: CourseItem[] }
+interface StyledPageProps { data: CourseItem[] }
 
-export const DefaultPage: React.FC<DefaultPageProps> = ({ data }) => {
-  const tree = useMemo(() => data ? buildTreeArrayReduce(data) : [], [data]);
-  const renderTree = (nodes: any[], level = 0) =>
-    nodes.map(n => (
-      <div key={n.id} style={{ marginLeft: level * 12 }}>
-        {n.name}
-        {renderTree(n.children, level + 1)}
-      </div>
-    ));
-  return <div>{ renderTree(tree) }</div>;
+export const StyledPage: React.FC<StyledPageProps> = ({ data }) => {
+    const styledTree = useMemo(() => data ? buildTree(data) : [], [data]);
+    return <CourseListItem items={styledTree} />;
 };

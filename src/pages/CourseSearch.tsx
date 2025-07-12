@@ -2,12 +2,12 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import FormControl from '@mui/material/FormControl';
 import { Box, Paper, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import Card from './components/Card/Card';
-import Button from './components/Button/Button';
 import { enqueueSnackbar } from 'notistack';
-import { fetchCourses } from './utilities';
-import { StyledPage } from './pages/PlainPage';
-import { DefaultPage } from './pages/StyledPage';
+import { fetchCourses } from '../utilities';
+import { StyledPage } from './StyledPage';
+import { DefaultPage } from './DefaultPage';
+import Card from '../components/Card/Card';
+import Button from '../components/Button/Button';
 
 interface CourseSearchProps { mode: 'default' | 'styled' }
 
