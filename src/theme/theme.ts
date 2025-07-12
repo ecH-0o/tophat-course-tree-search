@@ -1,29 +1,34 @@
 import { createTheme } from '@mui/material/styles';
-
+import colors from './colors';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#934AF4',
+      main: colors.primary,
     },
     text: {
-      primary: '#2D1159',
+      primary: colors.primary_text,
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          background: colors.background,
+        }
+      }},
     MuiListItemButton: {
       styleOverrides: {
         root: {
           '&:hover': {
-            backgroundColor: '#F7F0FF',
+            backgroundColor: colors.secondary,
           },
         },
       },
     },
-
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          color: '#934AF4',
+          color: colors.primary,
         },
       },
     },
@@ -31,7 +36,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#934AF4',
+            borderColor: colors.primary,
           },
         },
       },
@@ -39,8 +44,8 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          backgroundColor: '#934AF4',
-          border: '1px solid #934AF4',
+          backgroundColor: colors.primary,
+          border: `1px solid ${colors.primary}`,
           color: '#FFFFFF',
         }
       }

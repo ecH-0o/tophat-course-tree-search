@@ -12,10 +12,6 @@
   font-style: normal;
 }
 
-:root {
-  --main-text-color: #2D1159;
-}
-
 html,
 body,
 #root {
@@ -23,8 +19,6 @@ body,
   padding: 0;
   height: 100vh; width: 100vw; display: flex; flex-direction: column;
   font-family: 'Replica Pro', sans-serif;
-  background: linear-gradient(90deg, #eddfff, #fff1f6);
-  color: var(--main-text-color);
 }
 
 body {
