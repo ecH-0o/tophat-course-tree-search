@@ -3,6 +3,9 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
+    primary: {
+      main: '#934AF4',
+    },
     text: {
       primary: '#2D1159',
     },
@@ -17,12 +20,29 @@ const theme = createTheme({
         },
       },
     },
+
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: '#934AF4',
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#934AF4',
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
-          backgroundColor: '#934af4',
-          border: '1px solid #934af4',
-          color: '#fff',
+          backgroundColor: '#934AF4',
+          border: '1px solid #934AF4',
+          color: '#FFFFFF',
         }
       }
     }
