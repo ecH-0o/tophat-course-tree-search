@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import FormControl from '@mui/material/FormControl';
 import { Box, Paper, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -33,6 +33,16 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
         }
     }, [data, status]);
 
+    const handleSearch = useCallback(() => {
+        setError(null);
+        const term = searchTermRef.current?.value.trim();
+        if (term) {
+            refetch();
+        } else {
+            setError("Please enter the search term.");
+        }
+    }, [refetch]);
+
     return (
         <>
             <header>
@@ -56,12 +66,7 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
                                 inputRef={searchTermRef}
                             />
                         </FormControl>
-                        <Button onClick={() => {
-                            setError(null);
-                            searchTermRef.current?.value?.trim()
-                                ? refetch()
-                                : setError('Please enter the search term.')
-                        }}>
+                        <Button onClick={handleSearch}>
                             Search
                         </Button>
                         {error && (
