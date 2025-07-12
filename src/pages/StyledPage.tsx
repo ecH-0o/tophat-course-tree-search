@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import CourseListItem from '../components/Course/CourseListItem';
 import { CourseItem } from '../models/CourseItem';
-import { buildTree } from '../utilities';
+import { buildTree } from '../utilities/utilities';
 
 interface StyledPageProps { data: CourseItem[] }
 

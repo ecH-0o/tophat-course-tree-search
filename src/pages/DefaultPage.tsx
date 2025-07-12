@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { buildTreeArrayReduce } from '../utilities';
+import { buildTreeArrayReduce } from '../utilities/utilities';
 import { CourseItem } from '../models/CourseItem';
 
 interface DefaultPageProps { data: CourseItem[] }

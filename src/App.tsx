@@ -1,6 +1,6 @@
 import './css/App.css';
 import { Routes, Route } from 'react-router-dom';
-import CourseSearch from './pages/CourseSearch';
+import CourseSearch from './pages/CourseSearch/CourseSearch';
 
 function App() {
   return (
