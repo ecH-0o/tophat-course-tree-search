@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import theme from './theme';
 import { ThemeProvider } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SnackbarProvider } from 'notistack';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,9 @@ root.render(
   <ThemeProvider theme={theme}>
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <SnackbarProvider>
+          <App />
+        </SnackbarProvider>
       </QueryClientProvider>
     </React.StrictMode>
   </ThemeProvider>
