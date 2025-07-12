@@ -7,9 +7,11 @@ import { styled } from '@mui/material/styles';
  * 
  */
 
-const StyledCard = styled(MuiCard)<MuiCardProps>(({ theme }) => ({
+const StyledCard = styled(MuiCard)<MuiCardProps>(() => ({
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'center', 
+  alignItems: 'center',
   margin: 0,
 }));
 

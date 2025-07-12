@@ -12,6 +12,10 @@
   font-style: normal;
 }
 
+:root {
+  --main-text-color: #2D1159;
+}
+
 html,
 body,
 #root {
@@ -20,12 +24,16 @@ body,
   height: 100vh; width: 100vw; display: flex; flex-direction: column;
   font-family: 'Replica Pro', sans-serif;
   background: linear-gradient(90deg, #eddfff, #fff1f6);
+  color: var(--main-text-color);
 }
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+body * {
+    color: var(--main-text-color);
 }
 
 code {
