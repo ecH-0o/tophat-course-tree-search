@@ -1,19 +1,22 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import FormControl from '@mui/material/FormControl';
 import { Box, Paper, TextField } from '@mui/material';
+import CourseListItem from './components/Course/CourseListItem';
 import { useQuery } from '@tanstack/react-query';
 import Card from './components/Card/Card';
 import Button from './components/Button/Button';
+import { CourseItem } from './models/CourseItem';
 import { enqueueSnackbar } from 'notistack';
+import { buildTree, buildTreeArrayReduce } from './utilities';
 
-const fetchCourses = async (searchTerm: string) => {
+const fetchCourses = async (searchTerm: string): Promise<CourseItem[]> => {
     const res = await fetch(`https://coursetreesearch-service-sandbox.dev.tophat.com/?query=${searchTerm}`);
     return res.json();
 };
 
 export const CourseSearch: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
-    const [items, setItems] = useState<any[]>([]);
+    const [items, setItems] = useState<CourseItem[]>([]);
     const searchTermRef = useRef<HTMLInputElement>(null);
 
     const { data, status, refetch } = useQuery({
@@ -25,7 +28,6 @@ export const CourseSearch: React.FC = () => {
     useEffect(() => {
         if (data) {
             if (status === 'success') {
-                setItems(data);
                 enqueueSnackbar('Success!', { variant: 'success' })
             }
             else if (status === 'error') {
@@ -34,6 +36,19 @@ export const CourseSearch: React.FC = () => {
             }
         }
     }, [data, status]);
+
+    //const tree = useMemo(() => buildTreeArrayReduce(data), [data]);
+    const styledTree = useMemo(() => data ? buildTree(data) : [], [data]);
+
+
+    // const renderTree = (nodes: any[], level = 0) =>
+    //     nodes.map(n => (
+    //         <div key={n.id} style={{ marginLeft: level * 12 }}>
+    //             {n.name}
+    //             {renderTree(n.children, level + 1)}
+    //         </div>
+    //     ));
+
 
     return (
         <Card sx={{ background: 'transparent', flex: 8 }}>
@@ -62,14 +77,16 @@ export const CourseSearch: React.FC = () => {
                     )}
                 </form>
 
-                <Paper sx={{ maxHeight: 500, overflow: 'auto', p: 2, width: 320}}>
+                <Paper sx={{ maxHeight: 500, overflow: 'auto', p: 2, width: 320 }}>
                     <Paper sx={{ width: 300, boxShadow: 0 }}>
-                        {items.length > 0 && (<div>{items}</div>)}
+                        {/* <div>
+                            {renderTree(tree)}
+                        </div> */}
+                        <CourseListItem items={styledTree} />
                     </Paper>
                 </Paper>
             </Card>
         </Card>
-
     );
 }
 
