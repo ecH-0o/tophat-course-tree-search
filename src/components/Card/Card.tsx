@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card as MuiCard, CardProps as MuiCardProps } from '@mui/material';
+import { Card as MuiCard, CardProps as MuiCardProps, styled } from '@mui/material';
 
 /**
  * Card component that wraps MUI Card.
@@ -13,8 +13,16 @@ import { Card as MuiCard, CardProps as MuiCardProps } from '@mui/material';
 export interface CardProps extends MuiCardProps {
 }
 
+const StyledCard = styled(MuiCard)<MuiCardProps>(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center', 
+  alignItems: 'center',
+  margin: 0,
+}));
+
 export const Card: React.FC<CardProps> = (props: CardProps) => {
-    return <MuiCard {...props}>{props.children}</MuiCard>;
+    return <StyledCard {...props}>{props.children}</StyledCard>;
 }
 
 export default Card;

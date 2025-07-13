@@ -68,9 +68,9 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
                 </a>
             </header>
             <Card sx={{ background: 'transparent', flex: 8 }}>
-                <Card sx={{ width: 500, height: 700, minHeight: 700 }}>
-                    <form noValidate autoComplete="off">
-                        <FormControl sx={{ width: '25ch' }}>
+                <Card sx={{ width: 500, height: 700, p: 5 }}>
+                    <form noValidate autoComplete="off" style={{ width: 320, display: 'flex', alignItems: 'center' }}>
+                        <FormControl sx={{ mr: 2 }}>
                             <TextField
                                 required
                                 id="outlined-required"
@@ -81,26 +81,22 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
                         <Button onClick={handleSearch}>
                             Search
                         </Button>
-                        {error && (
-                            <Box component="div" sx={{ color: 'error.main', mt: 2 }}>
-                                {error}
-                            </Box>
-                        )}
                     </form>
-
-                    <Paper sx={{ maxHeight: 500, overflow: 'auto', p: 2, width: 320 }}>
-                        <Paper sx={{ width: 300, boxShadow: 0 }}>
-                            {data ? mode === 'default' ?
-                                (<DefaultPage data={data} />) :     // Render DefaultPage if mode is 'default'
-                                (<StyledPage data={data} />) :      // or StyledPage if mode is 'styled'
-                                null
-                            }
-                        </Paper>
+                    {error && (
+                        <Box component="div" sx={{ width: 320, alignContent: 'start',color: 'error.main', mt: 2}}>
+                            {error}
+                        </Box>
+                    )}
+                    <Paper sx={{ height: 500, overflow: 'auto', p: 2, width: 320, boxShadow: 0 }}>
+                        {data ? mode === 'default' ?
+                            (<DefaultPage data={data} />) :     // Render DefaultPage if mode is 'default'
+                            (<StyledPage data={data} />) :      // or StyledPage if mode is 'styled'
+                            null
+                        }
                     </Paper>
                 </Card>
             </Card>
         </>
-
     );
 }
 
