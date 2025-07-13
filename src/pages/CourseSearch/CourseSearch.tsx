@@ -1,3 +1,12 @@
+/**
+ * Renders a search form to fetch CourseItem data from the API, and
+ * displays results via either DefaultPage or StyledPage based on
+ * the `mode` prop.
+ * 
+ * 
+ * @param {CourseSearchProps} props - Component props specifying rendering mode.
+ * @returns {JSX.Element} Rendered course search form and results.
+ */
 import { useState, useEffect, useRef, useCallback } from 'react';
 import FormControl from '@mui/material/FormControl';
 import { Box, Paper, TextField } from '@mui/material';
@@ -15,12 +24,14 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
     const [error, setError] = useState<string | null>(null);
     const searchTermRef = useRef<HTMLInputElement>(null);
 
+    // Fetch course items using react-query
     const { data, status, refetch } = useQuery({
         queryKey: ["courses"],
         queryFn: () => { const term = searchTermRef.current?.value.trim(); if (term) return fetchCourses(term) },
         enabled: false,
     });
 
+    // Handle data changes and status updates
     useEffect(() => {
         if (data) {
             if (status === 'success') {
@@ -33,6 +44,7 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
         }
     }, [data, status]);
 
+    // Handle search button click
     const handleSearch = useCallback(() => {
         setError(null);
         const term = searchTermRef.current?.value.trim();
@@ -79,8 +91,8 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
                     <Paper sx={{ maxHeight: 500, overflow: 'auto', p: 2, width: 320 }}>
                         <Paper sx={{ width: 300, boxShadow: 0 }}>
                             {data ? mode === 'default' ?
-                                (<DefaultPage data={data} />) :
-                                (<StyledPage data={data} />) :
+                                (<DefaultPage data={data} />) :     // Render DefaultPage if mode is 'default'
+                                (<StyledPage data={data} />) :      // or StyledPage if mode is 'styled'
                                 null
                             }
                         </Paper>

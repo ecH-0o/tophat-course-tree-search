@@ -1,25 +1,20 @@
 import * as React from 'react';
 import { Card as MuiCard, CardProps as MuiCardProps } from '@mui/material';
-import { styled } from '@mui/material/styles';
 
 /**
- * Represents a wrapper that displays a card.
+ * Card component that wraps MUI Card.
  * 
+ * This component passes all received props directly to the MUI Card.
+ * 
+ * @param {CardProps} props - Props for the card, including children and any MUI Card props.
+ * @returns {JSX.Element} Rendered card element.
  */
-
-const StyledCard = styled(MuiCard)<MuiCardProps>(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center', 
-  alignItems: 'center',
-  margin: 0,
-}));
 
 export interface CardProps extends MuiCardProps {
 }
 
 export const Card: React.FC<CardProps> = (props: CardProps) => {
-    return <StyledCard {...props}>{props.children}</StyledCard>;
+    return <MuiCard {...props}>{props.children}</MuiCard>;
 }
 
 export default Card;
