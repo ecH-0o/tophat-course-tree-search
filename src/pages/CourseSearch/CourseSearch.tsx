@@ -9,7 +9,7 @@
  */
 import { useState, useEffect, useRef, useCallback } from 'react';
 import FormControl from '@mui/material/FormControl';
-import { Box, Paper, TextField } from '@mui/material';
+import { Box, CircularProgress, Paper, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 import { fetchCourses } from '../../utilities/utilities';
@@ -17,11 +17,14 @@ import { StyledPage } from '../StyledPage';
 import { DefaultPage } from '../DefaultPage';
 import Card from '../../components/Card/Card';
 import Button from '../../components/Button/Button';
+import './CourseSearch.css';
 
 interface CourseSearchProps { mode: 'default' | 'styled' }
 
 export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const searchTermRef = useRef<HTMLInputElement>(null);
 
     // Fetch course items using react-query
@@ -33,15 +36,15 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
 
     // Handle data changes and status updates
     useEffect(() => {
-        if (data) {
-            if (status === 'success') {
+        if (status === 'success') {
+            if (data) {
                 enqueueSnackbar('Success!', { variant: 'success' })
             }
-            else if (status === 'error') {
-                setError('ERROR: Failed to fetch courses.');
-                return;
-            }
         }
+        else if (status === 'error') {
+            setError('ERROR: Failed to fetch courses.');
+        }
+        setIsLoading(false);
     }, [data, status]);
 
     // Handle search button click
@@ -49,6 +52,7 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
         setError(null);
         const term = searchTermRef.current?.value.trim();
         if (term) {
+            setIsLoading(true);
             refetch();
         } else {
             setError("Please enter the search term.");
@@ -57,20 +61,19 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
 
     return (
         <>
-            <header style={{ paddingTop: 20, paddingBottom: 20, paddingLeft: 30, alignItems: 'center', display: 'flex' }}>
+            <header className="search-header">
                 <a href="https://tophat.com/">
                     <Box
                         component="img"
                         src="https://tophat.com/wp-content/themes/TOPHAT01/build/images/logo.svg"
-                        width={125}
-                        height={21.5}
+                        className='logo-card'
                         alt="Top Hat Logo" />
                 </a>
             </header>
-            <Card sx={{ background: 'transparent', flex: 8 }}>
-                <Card sx={{ width: 500, height: 700, p: 5 }}>
-                    <form noValidate autoComplete="off" style={{ width: 320, display: 'flex', alignItems: 'center' }}>
-                        <FormControl sx={{ mr: 2 }}>
+            <Card className='search-body'>
+                <Card className='search-card'>
+                    <form noValidate autoComplete="off" className="form-control">
+                        <FormControl>
                             <TextField
                                 required
                                 id="outlined-required"
@@ -83,12 +86,15 @@ export const CourseSearch: React.FC<CourseSearchProps> = ({ mode }) => {
                         </Button>
                     </form>
                     {error && (
-                        <Box component="div" sx={{ width: 320, alignContent: 'start',color: 'error.main', mt: 2}}>
+                        <Box component="div" sx={{ color: 'error.main' }}>
                             {error}
                         </Box>
                     )}
-                    <Paper sx={{ height: 500, overflow: 'auto', p: 2, width: 320, boxShadow: 0 }}>
-                        {data ? mode === 'default' ?
+                    <Paper className='data-card'>
+                        {isLoading && <Box component="div" className='loading-card'>
+                            <CircularProgress />
+                        </Box>}
+                        {!isLoading && !error && data ? mode === 'default' ?
                             (<DefaultPage data={data} />) :     // Render DefaultPage if mode is 'default'
                             (<StyledPage data={data} />) :      // or StyledPage if mode is 'styled'
                             null

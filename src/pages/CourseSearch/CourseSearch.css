@@ -1,0 +1,41 @@
+.search-header {
+    padding: 20px;
+}
+
+.search-body {
+    background: transparent !important;
+    flex: 8
+}
+
+.search-card {
+    width: 500px;
+    height: 700px;
+    padding: 20px
+}
+
+.form-control {
+    width: 320px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    justify-content: space-between
+}
+
+.logo-card {
+    height: 21.5px;
+    width: 125px;
+}
+
+.loading-card {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.data-card {
+    height: 500px;
+    overflow: auto;
+    width: 320px;
+    box-shadow: none !important
+}
